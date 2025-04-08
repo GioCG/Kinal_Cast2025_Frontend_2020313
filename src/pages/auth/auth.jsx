@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {Login} from "../../components/Login";
-
+import {Register} from "../../components/Register"
 import "./authPage.css"
 
 export const Auth= () => {
@@ -12,11 +12,11 @@ export const Auth= () => {
   }
 
   return (
-    <div clasName="ath-container">
+    <div className="ath-container">
       {isLogin ? (
         <Login switchAuthHandler={handleAutoPageToggle}/>
       ):(
-        register
+        <Register switchAuthHandler={handleAutoPageToggle}/>
       )}
     </div>
   )

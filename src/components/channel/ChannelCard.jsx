@@ -1,32 +1,32 @@
-const imagUrl = '';
+const imageUrl = '';
 
-const channelAvatar =({}) =>{
-    return(
-        <div className = "channels.avatar-container">
-            <img src={url || imagUrl} width='100%' height='100%' alt="Default avatar"/>
-
+const ChannelAvatar = ({url}) => {
+    return (
+        <div className="channels-avatar-container">
+            <img src={url || imageUrl} width='100%' height='100%' alt="Default avatar"/>
         </div>
     )
 }
 
-export const channelCard =({
+export const ChannelCard = ({
     title,
     id,
     username,
     isOnline,
     avatarUrl,
     navigateToChannelHandler
-}) =>{
-    const handleNavigate = () =>{
+}) => {
+
+    const handleNavigate = () => {
         navigateToChannelHandler(id)
     }
 
-    return(
+    return (
         <div className="channels-card" onClick={handleNavigate}>
-            <channelAvatar url={avatarUrl}/>
-            <span className="channels-car-title">{title}</span>
-            <span className="channels-car-title">{username}</span>
-            <span className="channels-car-title" style={{color:isOnline ? 'green':'red'}}>{title}
+            <ChannelAvatar url={avatarUrl}/>
+            <span className="channels-card-title">{title}</span>
+            <span className="channels-card-title">{username}</span>
+            <span className="channels-card-title" style={{color: isOnline ? 'green' : 'red'}}>
                 {isOnline ? 'Online' : 'Offline'}
             </span>
         </div>

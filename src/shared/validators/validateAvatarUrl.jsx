@@ -4,4 +4,4 @@ export const validationAvatarUrl = (url) => {
     return regex.test(url);
 }
 
-export const avatarUrlValidatioMessage = 'Esta no es una URL valida';
+export const avatarUrlValidationMessage = 'Esta no es una URL valida';

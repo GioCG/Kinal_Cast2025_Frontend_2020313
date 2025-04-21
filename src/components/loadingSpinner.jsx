@@ -1,8 +1,7 @@
-
-export const loadingSpinner = () => {
-  return (
-    <div className="content-container">
-        <div className="spinner"></div>
-    </div>
-  )
+export const LoadingSpinner = () => {
+    return(
+        <div className="spinner-container">
+            <div className="spinner"></div>
+        </div>
+    )
 }

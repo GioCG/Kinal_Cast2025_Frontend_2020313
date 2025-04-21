@@ -27,12 +27,13 @@ export const useLogin = () => {
 
         localStorage.setItem('user', JSON.stringify(userDetails));
 
-        toast.success('Sesion iniciada corretamente')
+        toast.success('Sesion iniciada correctamente')
+
         navigate('/')
     }
 
     return {
         login,
-        isLoading
+        isLoading,
     }
 }

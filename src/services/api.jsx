@@ -1,5 +1,6 @@
 import axios from "axios";
 import { logout } from "../shared/hooks";
+import { Channels } from "../components/channel/Channels";
 
 const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:8080/twitch/v1',
@@ -55,7 +56,7 @@ export const getChannels = async () => {
     }
 }
 
-export const getChannelSettings =async () => {
+export const getChannelSettings = async () => {
     try {
         return await apiClient.get('/settings/channel')
     } catch (e) {
@@ -77,7 +78,7 @@ export const changePassword = async (data) => {
     }
 }
 
-export const updateChannelSetting = async(data) => {
+export const updateChannelSettings = async (data) => {
     try {
         return await apiClient.put('/settings/channel', data)
     } catch (e) {
@@ -87,13 +88,37 @@ export const updateChannelSetting = async(data) => {
         }
     }
 }
+
 export const getFollowedChannels = async () => {
     try {
         return await apiClient.get('/channels/followed')
-    } catch ( e) {
+    } catch (e) {
         checkResponseStatus(e)
         return {
             error: true,
+            e
+        }
+    }
+}
+
+export const getChannelDetails = async (ChannelId) =>{
+    try {
+        return await apiClient.get(`/channels/${ChannelId}`)
+    } catch (e) {
+        checkResponseStatus(e)
+        return{
+            error: true,
+            e
+        }
+    }
+}
+
+export const followChannel = async (ChannelId) =>{
+    try {
+        return await apiClient.post('/chanels/follow', {ChannelId})
+    } catch (e) {
+        return{
+            error:true,
             e
         }
     }

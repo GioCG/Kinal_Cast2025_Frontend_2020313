@@ -1,13 +1,12 @@
 import { useState } from "react";
 import {
     validatePasswordMessage,
-    validatePassword,
-    emailValidationMessage
+    validatePassword
 } from "../../shared/validators"
-import { useChangePassword } from "../../shared/hooks/useChangePassword";
-import{Input} from "../Input"
+import { useChangePassword } from "../../shared/hooks";
+import { Input } from '../Input'
 
-const inputs =[
+const inputs = [
     {
         field: 'password',
         label: 'Password',
@@ -15,7 +14,7 @@ const inputs =[
         type: 'password'
     },
     {
-        field: 'newpassword',
+        field: 'newPassword',
         label: 'New Password',
         validationMessage: validatePasswordMessage,
         type: 'password'
@@ -23,40 +22,41 @@ const inputs =[
 ]
 
 export const PasswordSettings = () => {
-    const[formState,setFormState] = useState({
-        password:{
-            isValid:false,
+    const [formState, setFormState ] = useState({
+        password: {
+            isValid: false,
             showError: false,
             value: ''
         },
-        newPassword:{
-            isValid:false,
+        newPassword: {
+            isValid: false,
             showError: false,
             value: ''
         }
     })
 
-    const {changePassword} =useChangePassword();
+    const { changePassword } = useChangePassword();
 
-    const handleInputValueChange = (value,field) => {
+    const handleInputValueChange = (value, field) => {
         setFormState((prevState) => ({
             ...prevState,
-            [field]:{
+            [field]: {
                 ...prevState[field],
                 value
             }
         }))
     }
 
-    const handleInputValidationOnBlur = (value, field) =>{
+    const handleInputValidationOnBlur = (value, field) => {
+
         let isValid = validatePassword(value)
 
         setFormState((prevState) => ({
             ...prevState,
-            [field]:{
+            [field]: {
                 ...prevState[field],
                 isValid,
-                showError:!isValid
+                showError: !isValid
             }
         }))
     }
@@ -64,16 +64,16 @@ export const PasswordSettings = () => {
     const isSubmitButtonDisabled = !formState.password.isValid ||
         !formState.newPassword.isValid
 
-    const handleFormSubmit =(event) =>{
+    const handleFormSubmit = (event) => {
         event.preventDefault();
         changePassword(formState.password.value, formState.newPassword.value)
     }
 
-    return(
+    return (
         <form className="settings-form">
-            {inputs.map((input) =>(
+            {inputs.map((input) => (
                 <Input
-                    Key={input.field}
+                    key={input.field}
                     field={input.field}
                     label={input.label}
                     value={formState[input.field].value}
@@ -86,7 +86,7 @@ export const PasswordSettings = () => {
                 />
             ))}
             <button onClick={handleFormSubmit} disabled={isSubmitButtonDisabled}>
-                actualizar Password
+                Actualizar Contraseña
             </button>
         </form>
     )

@@ -1,117 +1,142 @@
 import { useState } from "react";
-import{
+import {
     validateUsername,
     validateUsernameMessage,
     validationAvatarUrl,
     avatarUrlValidationMessage,
-    validationDescription,
-    descriptionValidationMessage,
+    validateDescription,
+    descriptionValidateMessage,
     validateTitle,
-    validateTitleMessage,
-    emailValidationMessage
+    validateTitleMessage
 } from '../../shared/validators'
-import { Input } from "../Input";
-import { Settings } from "lucide-react";
+import { Input } from '../Input'
 
-const inputs =[
+const inputs = [
     {
-        field:'username',
+        field: 'username',
         label: 'Username',
         validationMessage: validateUsernameMessage,
-        type:'text'
+        type: 'text'
     },
     {
-        field:'title',
+        field: 'title',
         label: 'Title',
         validationMessage: validateTitleMessage,
-        type:'text'
+        type: 'text'
     },
     {
-        field:'avatarUrl',
-        label: 'AvatarUrl',
+        field: 'avatarUrl',
+        label: 'Avatar Url',
         validationMessage: avatarUrlValidationMessage,
-        type:'text'
+        type: 'text'
     },
     {
-        field:'description',
-        label: 'Description',
-        validationMessage: descriptionValidationMessage,
-        type:'text'
-    },
+        field: 'description',
+        label: 'Descripción',
+        validationMessage: descriptionValidateMessage,
+        type: 'text'
+    }
 ]
 
-export const ChannelSettings =({settings,saveSettings}) =>{
-    const [formState, setFormState] =useState({
-        username:{
+export const ChannelSettings = ({ settings, saveSettings }) => {
+    const [formState, setFormState] = useState({
+        username: {
             isValid: validateUsername(settings.username),
             showError: false,
-            value:settings.username
+            value: settings.username
         },
-        title:{
+        title: {
             isValid: validateTitle(settings.title),
             showError: false,
-            value:settings.title
+            value: settings.title
         },
-        avatarUrl:{
-            isValid: validationAvatarUrl(Settings.avatarUrl),
+        avatarUrl: {
+            isValid: validationAvatarUrl(settings.avatarUrl),
             showError: false,
-            value:settings.avatarUrl
+            value: settings.avatarUrl
         },
-        description:{
-            isValid: validationDescription(Settings.description),
+        description: {
+            isValid: validateDescription(settings.description),
             showError: false,
-            value:settings.description
-        },
+            value: settings.description
+        }
     })
 
-    const handleInputValueChange = (value,field) => {
+    const handleInputValueChange = (value, field) => {
         setFormState((prevState) => ({
             ...prevState,
-            [field]:{
+            [field]: {
                 ...prevState[field],
                 value
             }
         }))
     }
-    
-    const handleInputValidationOnBlur = (value, field) =>{
+
+    const handleInputValidationOnBlur = (value, field) => {
+
         let isValid = false
-    
-        switch(field){
-            case'username':
+
+        switch(field) {
+            case 'username':
                 isValid = validateUsername(value)
                 break;
-            case'title':
+            case 'title':
                 isValid = validateTitle(value)
                 break;
-            case'avatarUrl':
+            case 'avatarUrl':
                 isValid = validationAvatarUrl(value)
                 break;
-            case'description':
-                isValid = validationDescription(value)
+            case 'description':
+                isValid = validateDescription(value)
                 break;
             default:
                 break;
         }
-
         setFormState((prevState) => ({
             ...prevState,
-            [field]:{
+            [field]: {
                 ...prevState[field],
                 isValid,
-                showError:!isValid
+                showError: !isValid
             }
         }))
     }
-    const handleFormSubmit =(event) =>{
-        event.prevDefault();
+
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
 
         saveSettings({
-            username:formState.username.value,
-            title:formState.title.value,
-            avatarUrl:formState.avatarUrl.value,
-            description:formState.description.value
+            username: formState.username.value,
+            title: formState.title.value,
+            avatarUrl: formState.avatarUrl.value,
+            description: formState.description.value
         })
     }
-}
 
+    const isSubmitButtonDisabled = !formState.username.isValid ||
+        !formState.title.isValid ||
+        !formState.avatarUrl.isValid ||
+        !formState.description.isValid
+
+    return (
+        <form className="settings-form">
+            {inputs.map((input) => (
+                <Input 
+                    key={input.field}
+                    field={input.field}
+                    label={input.label}
+                    value={formState[input.field].value}
+                    onChangeHandler={handleInputValueChange}
+                    onBlurHandler={handleInputValidationOnBlur}
+                    showErrorMessage={formState[input.field].showError}
+                    validationMessage={input.validationMessage}
+                    type={input.type}
+                    textarea={input.textarea}
+                />
+            ))}
+            <button onClick={handleFormSubmit} disabled={isSubmitButtonDisabled}>
+                Update
+            </button>
+        </form>
+    )
+}

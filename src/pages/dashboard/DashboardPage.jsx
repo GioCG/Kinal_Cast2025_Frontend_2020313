@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { Navbar } from "../../components/navbars/Navbar"
 import { LoadingSpinner } from "../../components/LoadingSpinner"
 import { Content } from "../../components/dashboard/Content"
-import { Sidebar } from "../../components/navbars/Sidebar"
+import { SidebarDemo } from "../../components/navbars/Sidebar"
 import { useChannels } from "../../shared/hooks/useChannels"
 import { useUserDetails } from "../../shared/hooks"
 import './dashboardPage.css'
@@ -24,7 +24,7 @@ export const DashboardPage = () => {
     <div className="dashboard-container">
         <Navbar />
         <Content channels={allChannels} getChannels={getChannels}/>
-        <Sidebar channels={followedChannels}/>
+        <SidebarDemo channels={followedChannels}/>
     </div>
   )
 }

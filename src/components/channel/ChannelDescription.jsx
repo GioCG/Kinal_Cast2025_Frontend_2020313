@@ -1,14 +1,14 @@
-import { getChannels } from "../../services";
-import { usefollowChannel, useUserDetails } from "../../shared/hooks";
+import { useFollowChannel, useUserDetails } from "../../shared/hooks";
 
-const followChannel = ({channelId,getChannels}) =>{
-    const { followChannel} = usefollowChannel();
-
-    const handleFollowChannel = () =>{
+const FollowButton = ({ channelId, getChannels }) => {
+ 
+    const { followChannel } = useFollowChannel();
+ 
+    const handleFollowChannel = () => {
         followChannel(channelId, getChannels)
     }
-
-    return<button onClick={handleFollowChannel} className="channel-follow-button">followChannel</button>
+ 
+    return <button onClick={handleFollowChannel} className="channel-follow-button">Follow Channel</button>
 }
 
 export const ChannelDescription = ({
@@ -26,7 +26,7 @@ export const ChannelDescription = ({
                 {username}
                 <span>
                     {isLogged && (
-                        <followButton
+                        <FollowButton
                             className='channel-follow-button'
                             channelId={channelId}
                             getChannels={getChannels}
@@ -36,7 +36,7 @@ export const ChannelDescription = ({
             </span>
             <span className="channel-description-title">{title}</span>
             <div className="channel-descprition-box">
-                <spa className="channel-descprition">{desction}</spa>
+                <span className="channel-descprition">{description}</span>
             </div>
         </div>
     )

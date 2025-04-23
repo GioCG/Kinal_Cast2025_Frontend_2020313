@@ -2,15 +2,16 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { getChannelDetails as getChannelDetailsRequest} from "../../services";
 
-export const useChannelDetails = () =>{
-    const[channelDetails, setChannelDetails] = useState();
+export const useChannelDetails = () => {
+    
+    const [ channelDetails, setChannelDetails ] = useState();
 
-    const getChannelDetails = async () =>{
+    const getChannelDetails = async (id) => {
         const responseData = await getChannelDetailsRequest(id)
 
         if(responseData.error){
             return toast.error(
-                responseData.e?.responseData?.data || 'Error al cargar la informacion del canal'
+                responseData.e?.response?.data || 'Error al cargar la información del canal'
             )
         }
 
@@ -18,7 +19,7 @@ export const useChannelDetails = () =>{
     }
 
     return{
-        channelDeails,
+        channelDetails,
         isFetching: !channelDetails,
         getChannelDetails
     }
